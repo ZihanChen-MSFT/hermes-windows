@@ -116,8 +116,9 @@ for (const group of groupOrder) {
   // Rows
   for (const name of benchNames) {
     const vals = meanLookup.map((lookup) => lookup.get(name));
-    const min = multiInput
-      ? Math.min(...vals.filter((v): v is number => v !== undefined))
+    const defined = vals.filter((v): v is number => v !== undefined);
+    const min = multiInput && defined.length > 1
+      ? Math.min(...defined)
       : undefined;
     const cells = [name];
     for (const v of vals) {
